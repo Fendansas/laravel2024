@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use App\Models\Group;
 
 Route::get('/', function () {
     return view('home');
@@ -13,6 +15,16 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('/groups', function () {
+    return view('groups',
+        ['groups' => Group::all(),]);
+})->name('groups');
+
+Route::get('/groups/{id}', function ($id) {
+    $group =Group::find($id);
+    return view('group',['group'=>$group]);
+})->name('group' );
 
 Route::get('/user-page', function () {
     return view('user-page');

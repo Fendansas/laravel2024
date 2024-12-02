@@ -18,6 +18,20 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'jobs' =>[
+                [
+                    'title' => 'director',
+                    'salary' => '100 0000',
+                ],
+                [
+                    'title' => 'Programmer',
+                    'salary' => '10 000',
+                ],
+                [
+                    'title' => 'Disigner',
+                    'salary' => '10 000',
+                ]
+            ],
         ]);
     }
 
