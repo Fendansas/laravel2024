@@ -1,37 +1,17 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+class Group extends Model {
+    use HasFactory;
 
-class Group{
-    public static function all(): array
+    protected $table = 'group';
+    protected $fillable = ['title', 'description'];
+
+    public function post()
     {
-        return[
-            [
-                'id' => '1',
-                'title' => 'director',
-                'salary' => '100 0000',
-            ],
-            [
-                'id' => '2',
-                'title' => 'Programmer',
-                'salary' => '10 000',
-            ],
-            [
-                'id' => '3',
-                'title' => 'Disigner',
-                'salary' => '10 000',
-            ]
-        ];
-    }
-
-    public static function find(int $id): array
-    {
-        $group = Arr::first(static::all(), fn ($group) => $group['id'] == $id);
-
-        if (! $group){
-            abort(404);
-        }
-        return $group;
+        return $this->belongsTo(Post::class);
     }
 }
