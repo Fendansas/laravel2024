@@ -14,4 +14,9 @@ class Post extends Model
     {
         return $this->hasMany(Group::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, foreignPivotKey: 'post_listing_id');
+    }
 }
