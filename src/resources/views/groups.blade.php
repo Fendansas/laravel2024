@@ -11,7 +11,14 @@
                 <div class="p-6 text-gray-900">
                     <ul>
                         @foreach($groups as $group)
-                            <li><a href="/groups/{{$group['id']}}"><strong>{{$group['title']}}:</strong> Pays {{$group['salary']}}</a> </li>
+                            <div class="border-1 border-r-2 m-2">
+                                <li>
+                                    <span>{{$group['id']}} </span>
+                                    <a href="/groups/{{$group['id']}}"><strong>{{$group['title']}}:</strong> Pays {{$group['salary']}}</a> </li>
+                                <div>
+                                    {{$group->post->name}}
+                                </div>
+                            </div>
                         @endforeach
                     </ul>
                 </div>

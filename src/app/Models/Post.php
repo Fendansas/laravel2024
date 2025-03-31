@@ -10,6 +10,12 @@ class Post extends Model
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'content',
+        'user_id'
+    ];
+
     public function groups()
     {
         return $this->hasMany(Group::class);
@@ -18,5 +24,10 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, foreignPivotKey: 'post_listing_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

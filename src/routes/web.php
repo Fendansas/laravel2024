@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +17,18 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
+Route::get('/posts/', [PostController::class, 'index'])->name('posts.index');
+
+//Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::get('/posts/create', [PostController::class, 'create'])
+    ->name('posts.create')
+    ->middleware('auth');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
 Route::get('/groups', function () {
+    $groups = Group::with('post')->get();
     return view('groups',
-        ['groups' => Group::all(),]);
+        ['groups' => $groups,]);
 })->name('groups');
 
 Route::get('/groups/{id}', function ($id) {
