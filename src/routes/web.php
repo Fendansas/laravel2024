@@ -25,6 +25,16 @@ Route::get('/posts/create', [PostController::class, 'create'])
     ->middleware('auth');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
+Route::put('/posts/{post}', [PostController::class, 'update'])
+    ->name('posts.update')
+    ->middleware('auth');
+
+Route::get('posts/{post}/edit',[PostController::class, 'edit'])
+    ->name('posts.edit')
+    ->middleware('auth');
+
+Route::get('/posts/{post}',[PostController::class,'show'])->name('posts.show');
+
 Route::get('/groups', function () {
     $groups = Group::with('post')->get();
     return view('groups',

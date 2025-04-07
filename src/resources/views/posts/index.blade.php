@@ -26,7 +26,10 @@
                                                 <p class="text-muted">
                                                     Автор: {{ optional($post->user)->name ?? 'Неизвестный автор' }}
                                                 </p>
-                                                <a href="#" class="btn btn-primary">Читать далее</a>
+                                                <a href="{{ route('posts.show', $post) }}" class="btn btn-primary">Читать далее</a>
+                                                @can('update', $post)
+                                                    <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">Edit</a>
+                                                @endcan
                                             </div>
                                         </div>
                                     </div>
