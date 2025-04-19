@@ -14,6 +14,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-8">
                                 <!-- Пост -->
+                                @include('partials.star-rating', ['post' => $post])
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <h2>{{ $post->title }}</h2>

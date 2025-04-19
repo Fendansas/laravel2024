@@ -20,6 +20,7 @@
                                 @foreach($posts as $post)
                                     <div class="col-md-4 mb-4">
                                         <div class="card">
+                                            @include('partials.star-rating', ['post' => $post])
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $post->title }}</h5>
                                                 <p class="card-text">{{ Str::limit($post->content, 100) }}</p>

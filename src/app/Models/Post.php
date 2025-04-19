@@ -35,4 +35,20 @@ class Post extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+    public function averageRating()
+    {
+        return $this->ratings()->avg('rating');
+    }
+
+    public function userRating()
+    {
+        return $this->ratings()
+                    ->where('user_id',auth()->id())
+                    ->value('rating');
+    }
 }

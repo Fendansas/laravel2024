@@ -73,4 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/posts/{post}/rate', [PostController::class, 'rate'])
+    ->name('posts.rate')
+    ->middleware('auth');
 require __DIR__.'/auth.php';

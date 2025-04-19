@@ -125,4 +125,35 @@ class PostController extends Controller
 
     }
 
+    public function rate(Request $request, Post $post)
+    {
+        $request->validate([
+            'rating' => 'required|integer|between:1,5'
+        ]);
+        if (!Auth::check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please login to rate posts'
+            ], 401);
+        }
+
+//        dd($post->id);
+
+        $rating = $post->ratings()->updateOrCreate(
+            [
+                'user_id' => Auth::id(),
+                'post_id' => $post->id
+            ],
+            [
+                'rating' => $request->rating
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+            'average_rating' => $post->fresh()->averageRating(),
+            'user_rating' => $request->rating
+        ]);
+    }
+
 }
