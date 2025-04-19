@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\Group;
@@ -34,6 +35,18 @@ Route::get('posts/{post}/edit',[PostController::class, 'edit'])
     ->middleware('auth');
 
 Route::get('/posts/{post}',[PostController::class,'show'])->name('posts.show');
+
+// Комментарии
+Route::post('/posts/{post}/comments', [PostController::class, 'addComment'])
+    ->name('posts.comments.store');
+Route::delete('/comments/{comment}', [PostController::class, 'deleteComment'])
+    ->name('comments.destroy');
+Route::put('/comments/{comment}', [PostController::class, 'updateComment'])
+    ->name('comments.update');
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index')->middleware('auth');
+Route::get('/users/{user}',[UserController::class, 'show'])->name('users.show')->middleware('auth');
+
 
 Route::get('/groups', function () {
     $groups = Group::with('post')->get();

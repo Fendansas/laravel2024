@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,6 +85,44 @@ class PostController extends Controller
         }
         $post->delete();
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
+    }
+
+    public function addComment(Request $request, Post $post)
+    {
+        $request->validate([
+            'content' => 'required|string|max:1000'
+        ]);
+
+        $comment = new Comment([
+            'content' => $request->content,
+            'user_id' => Auth::id()
+        ]);
+
+        $post->comments()->save($comment);
+
+        return back()->with('success', 'Comment added successfully');
+    }
+
+    public function updateComment(Request $request, Post $post, Comment $comment)
+    {
+        $this->authorize('update', $comment);
+
+        $request->validate([
+            'content' => 'required|string|max:1000'
+        ]);
+        $comment->update([
+            'content' => $request->content
+        ]);
+        return back()->with('success', 'Comment updated successfully');
+    }
+
+    public function deleteComment(Post $post, Comment $comment){
+
+        $this->authorize('delete', $comment);
+        $comment->delete();
+
+        return back()->with('success', 'Comment deleted successfully');
+
     }
 
 }
