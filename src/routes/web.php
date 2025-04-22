@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\Group;
@@ -76,4 +77,15 @@ Route::middleware('auth')->group(function () {
 Route::post('/posts/{post}/rate', [PostController::class, 'rate'])
     ->name('posts.rate')
     ->middleware('auth');
+
+Route::middleware(['auth'])->group(function (){
+    Route::get('/users/{user}/gallery',[GalleryController::class, 'index'])->name('gallery.index');
+    Route::get('/gallery/create', [GalleryController::class, 'create'])->name('gallery.create');
+    Route::get('/gallery/{image}', [GalleryController::class, 'show'])->name('gallery.show');
+    Route::delete('/gallery/{image}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
+    Route::post('/gallery',[GalleryController::class, 'store'])->name('gallery.store');
+
+});
+
+
 require __DIR__.'/auth.php';
