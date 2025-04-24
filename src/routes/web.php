@@ -87,5 +87,12 @@ Route::middleware(['auth'])->group(function (){
 
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('/friends/{user}/add', [FriendshipController::class, 'addFriend'])->name('friends.add');
+    Route::post('/friends/{user}/accept', [FriendshipController::class, 'acceptFriend'])->name('friends.accept');
+    Route::post('/friends/{user}/decline', [FriendshipController::class, 'declineFriend'])->name('friends.decline');
+    Route::delete('/friends/{user}/remove', [FriendshipController::class, 'removeFriend'])->name('friends.remove');
+});
+
 
 require __DIR__.'/auth.php';

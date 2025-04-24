@@ -54,4 +54,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(Image::class);
     }
+
+    public function friends()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'sender_id', 'recipient_id')
+            ->wherePivot('status', 'accepted')
+            ->withTimestamps();
+    }
+    public function pendingFriendsTo()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'sender_id', 'recipient_id')
+            ->wherePivot('status', 'pending')
+            ->withTimestamps();
+    }
+    public function pendingFriendsFrom()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'recipient_id', 'sender_id')
+            ->wherePivot('status', 'pending')
+            ->withTimestamps();
+    }
 }
